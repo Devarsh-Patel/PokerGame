@@ -16,15 +16,19 @@ class Game:
         self.players = [Player("Player 1"), Player("Player 2")]
         self.deck = create_deck()
 
-    def start_game(self):
+    def start_game(self, game_number=None):
         """
         Starts the poker game:
         - Creates and shuffles a new deck.
         - Deals 5 cards to each player.
         - Evaluates each player's hand.
         - Prints the hands and determines the winner.
+        :param game_number: Optional, the current game number for display.
         """
-        print("Starting Poker Game!\n")
+        if game_number is not None:
+            print(f"\n--- Game {game_number} ---")
+        else:
+            print("\n--- Poker Game ---")
         self.deck = create_deck()
         hands = deal_cards(self.deck, len(self.players), 5)
         for i, player in enumerate(self.players):
