@@ -23,13 +23,13 @@ class PokerTournament:
         :param num_games: Number of games to play.
         :param pot: Dollar amount for each game.
         """
-        for _ in range(num_games):
+        for game_number in range(1, num_games + 1):
             # Create a new game with the same 5 players
             game = Game()
             game.players = self.players  # Use tournament players
             game.deck = game.deck  # Deck is created in Game's __init__
             # Deal cards and evaluate hands for all players
-            game.start_game()
+            game.start_game(game_number)
             # Use evaluate_hand from utils or Game for each player
             try:
                 # Try to use Game's evaluate_hand if available
@@ -55,6 +55,15 @@ class PokerTournament:
         """
         return [self.winnings[player.name] for player in self.players]
 
+    def print_winners_by_winnings(self):
+        """
+        Prints the players' names sorted by their winnings from highest to lowest.
+        """
+        sorted_winners = sorted(self.winnings.items(), key=lambda x: x[1], reverse=True)
+        print("\nFinal Rankings (Highest to Lowest Winnings):")
+        for rank, (name, amount) in enumerate(sorted_winners, 1):
+            print(f"{rank}. {name}: ${amount}")
+
 # Example usage:
 def main():
     """
@@ -66,6 +75,7 @@ def main():
     winnings = tournament.get_winnings_list()
     print("Players:", [player.name for player in tournament.players])
     print("Winnings (in order 1-5):", winnings)
+    tournament.print_winners_by_winnings()
 
 if __name__ == "__main__":
     main()
